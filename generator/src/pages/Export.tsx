@@ -1,19 +1,19 @@
 import { INavLinkGroup, IStackProps, mergeStyles, Stack } from '@fluentui/react';
 import * as React from 'react';
-import { Workload } from '../../models/Workload';
-import { Resource } from '../../models/Resource';
-import { Header } from '../../components/Header';
-import { SideNavigation } from '../../components/SideNavigation/SideNavigation';
-import { GeneratorPanel } from '../../components/GeneratorPanel/GeneratorPanel';
-import { ExtractionType } from '../../models/ExtractionType';
-import { Generator } from '../../components/Generator/Generator';
-import { selectedResourcesState } from '../../state/resourcesState';
+import { Workload } from '../models/Workload';
+import { Resource } from '../models/Resource';
+import { Header } from '../components/Header';
+import { SideNavigation } from '../components/SideNavigation/SideNavigation';
+import { GeneratorPanel } from '../components/GeneratorPanel/GeneratorPanel';
+import { ExtractionType } from '../models/ExtractionType';
+import { Generator } from '../components/Generator/Generator';
+import { selectedResourcesState } from '../state/resourcesState';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { extractionTypeState } from '../../state/extractionTypeState';
-import { workloadsState } from '../../state/workloadState';
-import { generatorPanelState } from '../../state/generatorPanelState';
+import { extractionTypeState } from '../state/extractionTypeState';
+import { workloadsState } from '../state/workloadState';
+import { generatorPanelState } from '../state/generatorPanelState';
 
-export const GeneratorPage: React.FunctionComponent = () => {
+export const Export: React.FunctionComponent = () => {
   const extractionType = useRecoilValue(extractionTypeState);
   const [generatorPanelOpen, setGeneratorPanelOpen] = useRecoilState(generatorPanelState);
   const [navigationItems, setNavigationItems] = React.useState<INavLinkGroup[]>([]);
@@ -22,7 +22,7 @@ export const GeneratorPage: React.FunctionComponent = () => {
 
   const _isResourceChecked = React.useCallback(
     (resource: Resource) => {
-      const workload = workloads.find((workload) => workload.id === resource.workload);
+      const workload = workloads.find(workload => workload.id === resource.workload);
 
       if (workload !== undefined) {
         switch (extractionType) {
@@ -65,9 +65,9 @@ export const GeneratorPage: React.FunctionComponent = () => {
             url: '#Home',
             icon: 'Home',
             key: 'Home'
-          },
-        ],
-      },
+          }
+        ]
+      }
     ];
     workloads.forEach((workload: Workload) => {
       navigation[0].links.push({
@@ -83,7 +83,7 @@ export const GeneratorPage: React.FunctionComponent = () => {
 
   const _buildResourcesForExtractionType = React.useCallback(
     (resources: Resource[]): Resource[] => {
-      return resources.map((resource) => {
+      return resources.map(resource => {
         const isResourceChecked = _isResourceChecked(resource);
         const updatedResource =
           resource.checked !== isResourceChecked ? { ...resource, checked: isResourceChecked } : resource;
@@ -116,7 +116,7 @@ export const GeneratorPage: React.FunctionComponent = () => {
       const resourceResponse = await fetch(`/data/resources.json`);
       let resourcesData = (await resourceResponse.json()) as Resource[];
 
-      resourcesData = resourcesData.map((resource) => {
+      resourcesData = resourcesData.map(resource => {
         resource.checked = false;
         resource.hovered = false;
         return resource;
@@ -150,7 +150,7 @@ export const GeneratorPage: React.FunctionComponent = () => {
         position: 'fixed',
         top: 50,
         left: 0,
-        backgroundColor: '#ffffff',
+        backgroundColor: '#ffffff'
       })}
       verticalFill={true}
       {...props}
@@ -173,29 +173,19 @@ export const GeneratorPage: React.FunctionComponent = () => {
         selectors: {
           ':global(body)': {
             padding: 0,
-            margin: 0,
-          },
-        },
+            margin: 0
+          }
+        }
       })}
       {...props}
     />
   );
 
   return (
-    <Page>
-      <Header onGenerate={_onGenerateToggle}></Header>
-      <Content>
-        <Sidebar>
-          <SideNavigation items={navigationItems}></SideNavigation>
-        </Sidebar>
-        <Main>
-          <Generator></Generator>
+    <>
+      <Generator></Generator>
 
-          {generatorPanelOpen && (
-            <GeneratorPanel></GeneratorPanel>
-          )}
-        </Main>
-      </Content>
-    </Page>
+      {generatorPanelOpen && <GeneratorPanel></GeneratorPanel>}
+    </>
   );
 };

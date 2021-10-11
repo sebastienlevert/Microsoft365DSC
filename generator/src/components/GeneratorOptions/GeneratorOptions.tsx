@@ -8,7 +8,7 @@ import { extractionTypeState } from '../../state/extractionTypeState';
 
 export interface IGenerationOptionsProps {}
 
-export const GenerationOptions: React.FunctionComponent<IGenerationOptionsProps> = (props) => {
+export const GenerationOptions: React.FunctionComponent<IGenerationOptionsProps> = props => {
   const [extractionType, setExtractionType] = useRecoilState(extractionTypeState);
   const [authenticationType, setAuthenticationType] = useRecoilState(authenticationTypeState);
 
@@ -17,13 +17,13 @@ export const GenerationOptions: React.FunctionComponent<IGenerationOptionsProps>
     { key: ExtractionType.None, text: 'None' },
     { key: ExtractionType.Lite, text: 'Lite' },
     { key: ExtractionType.Default, text: 'Default' },
-    { key: ExtractionType.Full, text: 'Full' },
+    { key: ExtractionType.Full, text: 'Full' }
   ];
 
   const authenticationOptions: IDropdownOption[] = [
     { key: AuthenticationType.Application, text: 'Application' },
     { key: AuthenticationType.Credentials, text: 'Credentials' },
-    { key: AuthenticationType.Certificate, text: 'Certificate' },
+    { key: AuthenticationType.Certificate, text: 'Certificate' }
   ];
 
   const _onExtractionTypeChange = (event: React.FormEvent<HTMLDivElement>, item: IDropdownOption | undefined): void => {

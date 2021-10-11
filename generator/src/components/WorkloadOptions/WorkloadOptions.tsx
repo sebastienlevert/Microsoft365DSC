@@ -1,11 +1,4 @@
-import {
-  Checkbox,
-  IStackItemStyles,
-  IStackStyles,
-  IStackTokens,
-  Stack,
-  StackItem
-} from '@fluentui/react';
+import { Checkbox, IStackItemStyles, IStackStyles, IStackTokens, Stack, StackItem } from '@fluentui/react';
 import * as React from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { Resource } from '../../models/Resource';
@@ -18,7 +11,7 @@ export interface IWorkloadOptionsProps {
   onSelectedResourcesChange: (changedResource: Resource, checked?: boolean) => void;
 }
 
-export const WorkloadOptions: React.FunctionComponent<IWorkloadOptionsProps> = (props) => {
+export const WorkloadOptions: React.FunctionComponent<IWorkloadOptionsProps> = props => {
   const workloads = useRecoilValue(workloadsState);
   const [resources, setResources] = useRecoilState(selectedResourcesState);
 
@@ -26,14 +19,14 @@ export const WorkloadOptions: React.FunctionComponent<IWorkloadOptionsProps> = (
 
   const stackStyles: IStackStyles = {
     root: {
-      width: '100%',
-    },
+      width: '100%'
+    }
   };
 
   const stackItemStyles: IStackItemStyles = {
     root: {
-      width: 275,
-    },
+      width: 275
+    }
   };
 
   const _onCheckboxMouseEnter = function (resource: Resource) {
@@ -42,18 +35,18 @@ export const WorkloadOptions: React.FunctionComponent<IWorkloadOptionsProps> = (
   };
 
   const onSelectAll = (workload: Workload, isIndeterminate?: boolean, checked?: boolean) => {
-      setResources((selectedResources) => {
-        return selectedResources.map((resource) => {
-          const updatedResource = resource.workload === workload.id ? { ...resource, checked: isIndeterminate || checked } : resource;
-          return updatedResource;
-        });
+    setResources(selectedResources => {
+      return selectedResources.map(resource => {
+        const updatedResource =
+          resource.workload === workload.id ? { ...resource, checked: isIndeterminate || checked } : resource;
+        return updatedResource;
       });
-
+    });
   };
 
   return (
     <>
-      {workloads?.map((workload: Workload) => (
+      {/*workloads?.map((workload: Workload) => (
         <ContentCard workload={workload} key={workload.id} onSelectAll={onSelectAll}>
           <Stack horizontal wrap styles={stackStyles} tokens={wrapStackTokens}>
             {resources
@@ -73,7 +66,7 @@ export const WorkloadOptions: React.FunctionComponent<IWorkloadOptionsProps> = (
               ))}
           </Stack>
         </ContentCard>
-      ))}
+              ))*/}
     </>
   );
 };

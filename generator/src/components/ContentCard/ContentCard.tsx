@@ -12,7 +12,7 @@ export interface IContentCardProps {
   workload: Workload;
   onSelectAll(workload: Workload, isIndeterminate?: boolean, checked?: boolean): void;
 }
-export const ContentCard: React.FunctionComponent<IContentCardProps> = (props) => {
+export const ContentCard: React.FunctionComponent<IContentCardProps> = props => {
   const history = useHistory();
   const [isHovered, setIsHovered] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -23,16 +23,28 @@ export const ContentCard: React.FunctionComponent<IContentCardProps> = (props) =
   const selectedResources = useRecoilValue(selectedResourcesState);
 
   const _getWorkloadResources = React.useCallback(() => {
-    return selectedResources.filter((r) => r.workload === props.workload.id);
+    return selectedResources.filter(r => r.workload === props.workload.id);
   }, [selectedResources, props]);
 
   React.useEffect(() => {
     let workloadResources = _getWorkloadResources();
 
-    if(workloadResources.map((r) => r.checked).every((checked) => { return checked === true; })) {
+    if (
+      workloadResources
+        .map(r => r.checked)
+        .every(checked => {
+          return checked === true;
+        })
+    ) {
       setIsChecked(true);
-    } else if(workloadResources.map((r) => r.checked).every((checked) => { return checked === false; })) {
-      setIsChecked(false)
+    } else if (
+      workloadResources
+        .map(r => r.checked)
+        .every(checked => {
+          return checked === false;
+        })
+    ) {
+      setIsChecked(false);
     } else {
       setIsChecked(false);
       setIsIndeterminate(true);
@@ -42,13 +54,13 @@ export const ContentCard: React.FunctionComponent<IContentCardProps> = (props) =
   }, [_getWorkloadResources]);
 
   const _getCheckedWorkloadResources = () => {
-    return _getWorkloadResources().filter((r) => r.checked === true);
-  }
+    return _getWorkloadResources().filter(r => r.checked === true);
+  };
 
   const contentCardStyles: IStyle = {
     backgroundColor: theme.palette.white,
     padding: '40px',
-    boxShadow: DefaultEffects.elevation4,
+    boxShadow: DefaultEffects.elevation4
   };
 
   const titleStyles: IStyle = {
@@ -63,7 +75,7 @@ export const ContentCard: React.FunctionComponent<IContentCardProps> = (props) =
     fontSize: 25,
     height: 25,
     width: 25,
-    margin: '0 8px 0 0',
+    margin: '0 8px 0 0'
   });
 
   const linkIconStyles = mergeStyles({
@@ -83,30 +95,39 @@ export const ContentCard: React.FunctionComponent<IContentCardProps> = (props) =
             className={mergeStyles(titleStyles)}
             id={props.workload.title}
             onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}>
-              {props.workload.iconName && <Icon iconName={props.workload.iconName} className={iconStyles} />}
-              {props.workload.title}
-              {isHovered && (
-                <Icon
-                iconName={"Link"}
+            onMouseLeave={() => setIsHovered(false)}
+          >
+            {props.workload.iconName && <Icon iconName={props.workload.iconName} className={iconStyles} />}
+            {props.workload.title}
+            {isHovered && (
+              <Icon
+                iconName={'Link'}
                 className={linkIconStyles}
                 onClick={(ev?: React.MouseEvent<HTMLElement>) => {
-                  let hash = "#" + props.workload.title;
+                  let hash = '#' + props.workload.title;
                   window.location.hash = hash;
                   history.push(hash);
                   setSelectedWorkload(props.workload.id);
-                }} />
-              )}
-              {!isLoading &&
-                <Checkbox
-                  id={`chkSelectAll-${props.workload.id}`}
-                  key={props.workload.id}
-                  label={isIndeterminate ? `${_getCheckedWorkloadResources().length} selected` : isChecked ? "Unselect all" : "Select all" }
-                  styles={{ root: {right: 0, marginRight: '80px', position: 'absolute'}}}
-                  checked={isChecked}
-                  indeterminate={isIndeterminate}
-                  onChange={(ev, checked) => props.onSelectAll(props.workload, isIndeterminate, checked)} />
-              }
+                }}
+              />
+            )}
+            {!isLoading && (
+              <Checkbox
+                id={`chkSelectAll-${props.workload.id}`}
+                key={props.workload.id}
+                label={
+                  isIndeterminate
+                    ? `${_getCheckedWorkloadResources().length} selected`
+                    : isChecked
+                    ? 'Unselect all'
+                    : 'Select all'
+                }
+                styles={{ root: { right: 0, marginRight: '80px', position: 'absolute' } }}
+                checked={isChecked}
+                indeterminate={isIndeterminate}
+                onChange={(ev, checked) => props.onSelectAll(props.workload, isIndeterminate, checked)}
+              />
+            )}
           </h2>
         )}
 

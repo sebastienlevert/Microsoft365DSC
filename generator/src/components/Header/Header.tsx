@@ -3,13 +3,13 @@ import { Stack, Link, ILinkStyleProps, ILinkStyles, ITheme, IStackProps, Primary
 import { mergeStyles } from '@fluentui/merge-styles';
 
 export interface IHeaderProps {
-  onGenerate: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  //onGenerate: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 const microsoftLogo = mergeStyles({
   height: '20px',
   display: 'block',
-  paddingRight: '5px',
+  paddingRight: '5px'
 });
 
 const pipeFabricStyles = (p: ILinkStyleProps): ILinkStyles => ({
@@ -18,8 +18,8 @@ const pipeFabricStyles = (p: ILinkStyleProps): ILinkStyles => ({
     color: p.theme.semanticColors.bodyText,
     fontWeight: '600',
     fontSize: p.theme.fonts.medium.fontSize,
-    paddingLeft: '5px',
-  },
+    paddingLeft: '5px'
+  }
 });
 
 const headerStackStyles = (p: IStackProps, theme: ITheme) => ({
@@ -27,8 +27,8 @@ const headerStackStyles = (p: IStackProps, theme: ITheme) => ({
     backgroundColor: theme.semanticColors.bodyBackground,
     minHeight: 47,
     padding: '0 32px',
-    boxShadow: theme.effects.elevation16,
-  },
+    boxShadow: theme.effects.elevation16
+  }
 });
 
 const headerStyles = mergeStyles({
@@ -36,7 +36,7 @@ const headerStyles = mergeStyles({
   top: 0,
   left: 0,
   width: '100%',
-  zIndex: 1,
+  zIndex: 1
 });
 
 const HeaderComponent: React.FunctionComponent<IHeaderProps> = (props: IHeaderProps) => {
@@ -63,7 +63,7 @@ const HeaderComponent: React.FunctionComponent<IHeaderProps> = (props: IHeaderPr
           {process.env.REACT_APP_SITE_DESCRIPTION}
         </Link>
       </Stack>
-      <PrimaryButton text="Generate" onClick={props.onGenerate} />
+      <PrimaryButton text="Generate" /*onClick={props.onGenerate}*/ />
     </Stack>
   );
 };

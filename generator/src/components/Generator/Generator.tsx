@@ -8,12 +8,12 @@ import { WorkloadOptions } from '../WorkloadOptions/WorkloadOptions';
 
 export interface IGeneratorProps {}
 
-export const Generator: React.FunctionComponent<IGeneratorProps> = (props) => {
+export const Generator: React.FunctionComponent<IGeneratorProps> = props => {
   const setSelectedResources = useSetRecoilState(selectedResourcesState);
 
   const _onSelectedResourcesChange = (changedResource: Resource, checked?: boolean) => {
-    setSelectedResources((selectedResources) => {
-      return selectedResources.map((resource) => {
+    setSelectedResources(selectedResources => {
+      return selectedResources.map(resource => {
         const updatedResource = resource.name === changedResource.name ? { ...resource, checked: checked } : resource;
         return updatedResource;
       });
